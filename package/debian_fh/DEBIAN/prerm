@@ -1,0 +1,3 @@
+#!/bin/bash
+systemctl stop corona-ad.service
+systemctl disable corona-ad.service

@@ -1,0 +1,8 @@
+Package: corona-ad
+Version: 0.0.1
+Replaces: corona-ad
+Section: non-free/misc
+Priority: optional
+Architecture: armhf
+Maintainer: Mustafa Simsek <mustafasimsek93@gmail.com>
+Description: .
