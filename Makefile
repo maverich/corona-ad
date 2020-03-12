@@ -7,13 +7,13 @@ clean:
 	-rm tpflow
 
 build-go:
-	go build -o corona-ad src/service.go
+	go build -o corona-ad service.go
 
 build-go-arm:
-	cd ./src;GOOS=linux GOARCH=arm GOARM=6 go build -o corona-ad service.go;cd ../
+	GOOS=linux GOARCH=arm GOARM=6 go build -o corona-ad service.go
 
 build-go-amd:
-	cd ./src;GOOS=linux GOARCH=amd64 go build -o corona-ad src/service.go;cd ../
+	GOOS=linux GOARCH=amd64 go build -o corona-ad service.go
 
 
 configure-arm:
@@ -28,7 +28,7 @@ package-tar:
 package-deb-doc-fh:
 	@echo "Packaging application as Futurehome debian package"
 	chmod a+x package/debian_fh/DEBIAN/*
-	cp ./src/corona-ad package/debian_fh/usr/bin/corona-ad
+	cp ./corona-ad package/debian_fh/usr/bin/corona-ad
 	cp VERSION package/debian_fh/var/lib/futurehome/corona-ad
 	docker run --rm -v ${working_dir}:/build -w /build --name debuild debian dpkg-deb --build package/debian_fh
 	@echo "Done"
@@ -44,7 +44,7 @@ deb-amd : configure-amd64 build-go-amd package-deb-doc-tp
 	mv debian.deb corona-ad_$(version)_amd64.deb
 
 run :
-	go run src/service.go -c testdata/var/config.json
+	go run service.go -c testdata/var/config.json
 
 
 .phony : clean

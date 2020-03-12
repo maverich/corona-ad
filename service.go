@@ -108,12 +108,15 @@ func main() {
 
 	log.Info("Connected")
 	client, request := clientInit()
-	ticker := time.NewTicker(10 * time.Second)
+	ticker := time.NewTicker(5 * time.Minute)
+	confirmedCaseNumber := 0.0
 
 	for range ticker.C {
 		confirmedCases, _ := GetConfirmedNumberOfCases(client, request)
-		msg := fimpgo.NewFloatMessage("evt.sensor.report", "sensor_gp", confirmedCases, nil, nil, nil)
-		adr := fimpgo.Address{MsgType: fimpgo.MsgTypeEvt, ResourceType: fimpgo.ResourceTypeDevice, ResourceName: "corona-ad", ResourceAddress: "1", ServiceName: "temp_sensor", ServiceAddress: "300"}
-		mqtt.Publish(&adr, msg)
+		if confirmedCases != confirmedCaseNumber {
+			msg := fimpgo.NewFloatMessage("evt.sensor.report", "sensor_gp", confirmedCases, nil, nil, nil)
+			adr := fimpgo.Address{MsgType: fimpgo.MsgTypeEvt, ResourceType: fimpgo.ResourceTypeDevice, ResourceName: "corona-ad", ResourceAddress: "1", ServiceName: "sensor_gp", ServiceAddress: "300"}
+			mqtt.Publish(&adr, msg)
+		}
 	}
 }

@@ -1,0 +1,6 @@
+
+package/.DS_Store
+.DS_Store
+*.deb
+package/debian_fh/usr/bin/corona-ad
+corona-ad
